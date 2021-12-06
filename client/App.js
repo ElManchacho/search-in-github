@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 
 export default function App() {
   const fetchUser = async (username) => {
-    const response = await fetch(`http://40f1cdb711d6.ngrok.io/api/users/${username}`);
+    const response = await fetch(`http://87cd-86-218-25-162.ngrok.io/api/users/${username}`);
     const data = await response.json();
 
     console.log(data);
