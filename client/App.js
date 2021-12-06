@@ -12,12 +12,13 @@ export default function App() {
   let userData = ""
 
   const fetchUser = async (username) => {
-    //const response = await fetch(process.env.NGROK_URL + `/api/users/${username}`);
+    const { NGROK_URL, GITHUB_URL, API_TOKEN } = process.env;
+    //const response = await fetch(NGROK_URL + `/api/users/${username}`);
     console.log("url :")
-    console.log(process.env.GITHUB_URL)
-    const response = await fetch(`${process.env.GITHUB_URL}+${username}`,{
+    console.log(process.env['GITHUB_URL'])
+    const response = await fetch(`https://api.github.com/users/${username}`,{
       headers:{
-        Authorization : "token " + process.env.API_TOKEN
+        Authorization : "token " + "token"
       }
     });
     const data = await response.json();
