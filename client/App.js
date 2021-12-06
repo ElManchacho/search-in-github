@@ -5,7 +5,7 @@ import { StyleSheet, Text, View, TextInput } from 'react-native';
 
 export default function App() {
 
-  const [text, onChangeText] = React.useState("Useless Text");
+  const [text, onChangeText] = React.useState("Search a user ...");
 
   const [myText, setMyText] = useState("My Original Text");
 
@@ -24,11 +24,13 @@ export default function App() {
     const data = await response.json();
     if (data.login)
     {
-      userData = "login : "+data.login+", id : "+data.id 
+      userData = "login : "+data.login+", id : "+data.id
+      setMyText(userData)
     }
     else
     {
       userData = data.message
+      setMyText(userData)
     }
   }
 
@@ -42,9 +44,7 @@ export default function App() {
         onChangeText={onChangeText}
         value={text}
       />
-      <Text onPress = {() => setMyText(userData)}>
-                    {myText}
-            </Text>
+      <Text>{myText}</Text>
       <StatusBar style="auto" />
     </View>
   );
