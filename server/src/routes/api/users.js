@@ -7,10 +7,17 @@ let userData = "";
 
 api.get("/:username", (request, response) => {
   const { username } = request.params;
-  console.log(userData)
   response.json({
     data: { username },
   });
 });
+
+api.post("/:username/post", (request, response) => {
+  const { username } = request.params;
+
+  response.json({
+    data: { username },
+  });
+})
 
 export default api;
