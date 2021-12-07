@@ -1,4 +1,4 @@
 import { launch } from "./server";
+import { variables } from "../variables.json"
 
-const { PORT = 4242} = process.env;
-launch(PORT);
+launch(variables.PORT);

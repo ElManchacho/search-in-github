@@ -1003,6 +1003,13 @@
   dependencies:
     "object.assign" "^4.1.0"
 
+"babel-plugin-inline-dotenv@^1.6.0":
+  "integrity" "sha512-oWd5JmwfzdFN38PMBn35Ac1d+DKCkgIxKieEyWON3QTa4hCZV+VcTxaYkfQFMTwiqgCxe0a8o8NWyVjWwrrLXw=="
+  "resolved" "https://registry.npmjs.org/babel-plugin-inline-dotenv/-/babel-plugin-inline-dotenv-1.6.0.tgz"
+  "version" "1.6.0"
+  dependencies:
+    "dotenv" "^8.2.0"
+
 "babel-plugin-polyfill-corejs2@^0.3.0":
   "integrity" "sha512-wMDoBJ6uG4u4PNFh72Ty6t3EgfA91puCuAwKIazbQlci+ENb/UU9A3xG5lutjUIiXCIn1CY5L15r9LimiJyrSA=="
   "resolved" "https://registry.npmjs.org/babel-plugin-polyfill-corejs2/-/babel-plugin-polyfill-corejs2-0.3.0.tgz"
@@ -1026,6 +1033,11 @@
   "version" "0.3.0"
   dependencies:
     "@babel/helper-define-polyfill-provider" "^0.3.0"
+
+"babel-plugin-transform-inline-environment-variables@^0.4.3":
+  "integrity" "sha1-o7CYgzU76LXiM24/8e+KXZP5xIk="
+  "resolved" "https://registry.npmjs.org/babel-plugin-transform-inline-environment-variables/-/babel-plugin-transform-inline-environment-variables-0.4.3.tgz"
+  "version" "0.4.3"
 
 "balanced-match@^1.0.0":
   "integrity" "sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw=="
@@ -1356,6 +1368,11 @@
   "integrity" "sha512-rlBi9d8jpv9Sf1klPjNfFAuWDjKLwTIJJ/VxtoTwIR6hnZxcEOQCZg2oIL3MWBYw5GpUDKOEnND7LXTbIpQ03Q=="
   "resolved" "https://registry.npmjs.org/dotenv/-/dotenv-10.0.0.tgz"
   "version" "10.0.0"
+
+"dotenv@^8.2.0":
+  "integrity" "sha512-IrPdXQsk2BbzvCBGBOTmmSH5SodmqZNt4ERAZDmW4CT+tL8VtvinqywuANaFu4bOMWki16nqf0e4oC0QIaDr/g=="
+  "resolved" "https://registry.npmjs.org/dotenv/-/dotenv-8.6.0.tgz"
+  "version" "8.6.0"
 
 "duplexer3@^0.1.4":
   "integrity" "sha1-7gHdHKwO08vH/b6jfcCo8c4ALOI="
