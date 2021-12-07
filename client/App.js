@@ -12,26 +12,40 @@ export default function App() {
   let userData = ""
 
   const fetchUser = async (username) => {
+
+    // initialise juste le userData
+
     const { API_TOKEN } = process.env;
     const { GITHUB_URL } = process.env;
     const { NGROK_URL } = process.env;
-    //const response = await fetch(NGROK_URL + `/api/users/${username}`);
-    const response = await fetch(`${GITHUB_URL}${username}`,{
-      headers:{
-        Authorization : "token " + API_TOKEN
-      }
-    });
-    const data = await response.json();
-    if (data.login)
+    const isAlreadyInSql = await fetch(NGROK_URL + `/api/users/${username}`);
+    if (isAlreadyInSql.isHere)
     {
-      userData = "login : "+data.login+", id : "+data.id
-      setMyText(userData)
+      console.log(`GET des infos à faire pour le User ${username}`)
     }
     else
     {
-      userData = data.message
-      setMyText(userData)
+      console.log(`POST à faire pour le User ${username}`)
+      const response = await fetch(`${GITHUB_URL}${username}`,{
+        headers:{
+          Authorization : "token " + API_TOKEN
+        }
+      });
+      const data = await response.json();
+      if (data.login)
+      {
+        userData = "login : "+data.login+", id : "+data.id
+        setMyText(userData)
+      }
+      else
+      {
+        userData = data.message
+        setMyText(userData)
+      }
     }
+
+    //const addToSql = await fetch(NGROK_URL + `/api/users/${username}/post`);
+    
   }
 
   fetchUser(text)

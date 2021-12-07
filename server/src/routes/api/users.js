@@ -3,16 +3,38 @@ import { variables } from '../../../variables.json'
 
 const api = Router();
 
-let userData = "";
-
 api.get("/:username", (request, response) => {
+
   const { username } = request.params;
-  response.json({
-    data: { username },
-  });
+
+
+    const requestGitApi = require('request');
+
+    var options = {
+      uri: `${variables.GITHUB_URL}${username}`,
+      method: 'GET',
+      headers: {'user-agent': 'node.js'}
+    };
+    
+    
+    requestGitApi(options,function (error,responseGitApi,body){
+      if(!error && responseGitApi.statusCode == 200){
+          response.json({
+            data: { body },
+            //isHere:true,
+          });
+      }else{
+        response.json({
+          data: {} ,
+          //isHere:false,
+        });
+        console.log()
+      }
+    })
+
 });
 
-api.post("/:username/post", (request, response) => {
+api.post("/post/:username", (request, response) => {
   const { username } = request.params;
 
   response.json({
