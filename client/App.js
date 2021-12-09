@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Button, FlatList } from 'react-native';
 
@@ -6,7 +5,7 @@ export default function App() {
 
   const [toSearch, onChangeText] = React.useState("Search a user . . .");
 
-  const [displayUser, setUserInfo] = useState("");
+  const [displayUser, setUserInfo] = useState({Info:"User data will be displayed here"});
 
   const fetchUserData = async (username) => {
     const res = fetch(`http://localhost:4242/api/users/${username}`, {
@@ -25,22 +24,19 @@ export default function App() {
         setUserInfo(userData.user)
       }
       else {
-        setUserInfo({ error: "User not found" })
+        setUserInfo({ Info: "User not found" })
       }
     }
 
   }
 
   const renderItems = (userData) => {
-    if (userData)
-    {
-
-
-      return <View style={styles.displayBox}>
-      <Text>{userData.error}</Text>
-    </View>
-    
+    var template = []
+    for (const key in userData){
+      template.push(<View key={key}><Text>{key} : {userData[key]}</Text></View>)
     }
+
+    return template
   }
 
 
@@ -60,7 +56,9 @@ export default function App() {
           />
           <Button color='rgb(33,150,243)' title="Search" onPress={fetchAction}></Button>
         </View>
-        { renderItems(displayUser) }
+        <View style={styles.displayBox}>
+          { renderItems(displayUser) }
+        </View>
       </View>
     </View>
   );
