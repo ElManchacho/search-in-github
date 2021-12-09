@@ -1,74 +1,116 @@
 import { StatusBar } from 'expo-status-bar';
-import React, {useState } from 'react';
-import { StyleSheet, Text, View, TextInput } from 'react-native';
-
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, TextInput, Button, FlatList } from 'react-native';
 
 export default function App() {
 
-  const [text, onChangeText] = React.useState("Search a user ...");
+  const [toSearch, onChangeText] = React.useState("Search a user . . .");
 
-  const [myText, setMyText] = useState("My Original Text");
+  const [displayUser, setUserInfo] = useState("");
 
-  let userData = ""
-
-  const fetchUser = async (username) => {
-
-    // initialise juste le userData
-
-    const { API_TOKEN } = process.env;
-    const { GITHUB_URL } = process.env;
-    const { NGROK_URL } = process.env;
-    const isAlreadyInSql = await fetch(NGROK_URL + `/api/users/${username}`);
-    if (isAlreadyInSql.isHere)
-    {
-      console.log(`GET des infos à faire pour le User ${username}`)
-    }
-    else
-    {
-      console.log(`POST à faire pour le User ${username}`)
-      const response = await fetch(`${GITHUB_URL}${username}`,{
-        headers:{
-          Authorization : "token " + API_TOKEN
-        }
-      });
-      const data = await response.json();
-      if (data.login)
-      {
-        userData = "login : "+data.login+", id : "+data.id
-        setMyText(userData)
+  const fetchUserData = async (username) => {
+    const res = fetch(`http://localhost:4242/api/users/${username}`, {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json'
       }
-      else
-      {
-        userData = data.message
-        setMyText(userData)
-      }
-    }
-
-    //const addToSql = await fetch(NGROK_URL + `/api/users/${username}/post`);
-    
+    })
+    return await (await res).json()
   }
 
-  fetchUser(text)
+  const fetchAction = async () => {
+    if (toSearch) {
+      const userData = await fetchUserData(toSearch.toLowerCase())
+      if (userData.user) {
+        setUserInfo(userData.user)
+      }
+      else {
+        setUserInfo({ error: "User not found" })
+      }
+    }
+
+  }
+
+  const renderItems = (userData) => {
+    if (userData)
+    {
+
+
+      return <View style={styles.displayBox}>
+      <Text>{userData.error}</Text>
+    </View>
+    
+    }
+  }
+
 
   return (
     <View style={styles.container}>
-      <Text>Hello ! You can search a user's github data here : </Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={onChangeText}
-        value={text}
-      />
-      <Text>{myText}</Text>
-      <StatusBar style="auto" />
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>GitHub user searcher</Text>
+      </View>
+
+      <View style={styles.content}>
+        <View style={styles.searchBox}>
+          <Text style={styles.title}>Type the username you want to search :</Text>
+          <TextInput
+            style={styles.input}
+            onChangeText={onChangeText}
+            value={toSearch}
+          />
+          <Button color='rgb(33,150,243)' title="Search" onPress={fetchAction}></Button>
+        </View>
+        { renderItems(displayUser) }
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
+  headerTitle: {
+    fontSize: 30,
+    fontWeight: 'bold',
+  },
+  title: {
+    fontSize: 25,
+    marginBottom: '15px'
+  },
+  item: {
+    padding: 10,
+    fontSize: 18,
+    height: 44,
+    fontSize: 20,
+  },
+  header: {
+    paddingTop: '10px',
+    paddingBottom: '20px',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    backgroundColor: 'lightgray'
+  },
+  content: {
+    marginTop: '2%',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  input: {
+    fontSize: 20,
+    textAlign: 'center',
+    marginBottom: '15px',
+  },
+  searchBox: {
+    margin: '20px',
+    backgroundColor: 'lightgray',
+    padding: '20px',
+    borderRadius: '10px',
+  },
+  displayBox: {
+    margin: '20px',
+    backgroundColor: 'lightgray',
+    padding: '20px',
+    borderRadius: '10px',
+  },
+  container: {
+    backgroundColor: '#fff',
   },
 });
