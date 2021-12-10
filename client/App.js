@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, FlatList } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, Image } from 'react-native';
 
 export default function App() {
 
@@ -32,8 +32,15 @@ export default function App() {
 
   const renderItems = (userData) => {
     var template = []
-    for (const key in userData){
-      template.push(<View key={key}><Text>{key} : {userData[key]}</Text></View>)
+    template.push(
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <Image style={styles.logo} source={{ uri: userData.avatar_url }} />
+        </View>
+    )
+    for (const key in userData) {
+      template.push(<View key={key}>
+          <Text>{key} : {userData[key]}</Text>
+      </View>)
     }
 
     return template
@@ -65,6 +72,10 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  logo: {
+    width: 66,
+    height: 58,
+  },
   headerTitle: {
     fontSize: 30,
     fontWeight: 'bold',
